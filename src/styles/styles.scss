@@ -1,0 +1,31 @@
+// Write your overrides
+@import "stylesNygsoft";
+
+// --- --- --- btn-app-bar --- --- ---
+.btn-app-bar:focus{
+  border-bottom: 2px solid transparent;
+  border-bottom-color: #efc458;
+}
+.btn-app-bar:hover{
+  border-bottom: 2px solid transparent;
+  border-bottom-color: #efc458;
+}
+// drawer
+.btn-app-bar-drawer{
+  border-bottom: 1px solid transparent;
+  border-bottom-color: gray;
+}
+.btn-app-bar-drawer:hover{
+  border-bottom: 2px solid transparent;
+  border-bottom-color: #efc458;
+}
+// stacked
+.btn-app-bar-stacked:hover{
+  border-bottom: 10px solid transparent;
+  border-bottom-color: #efc458;
+}
+// --- --- --- btn-app-bar --- --- ---
+
+.first-letter-uppercase::first-letter {
+  text-transform: uppercase !important; 
+}
