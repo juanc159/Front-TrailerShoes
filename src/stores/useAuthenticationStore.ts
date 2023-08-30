@@ -7,7 +7,6 @@ import type IAuth from "@/interfaces/Authentication/IAuth";
 import type ILogin from "@/interfaces/Authentication/ILogin";
 import type IRegister from "@/interfaces/Authentication/IRegister";
 import IPromise from "@/interfaces/Axios/IPromise";
-import { useCalendarStore } from '@/pages/Calendar/Store/useCalendarStore';
 import { usePreloadStore } from '@/stores/usePreloadStore';
 import IUserForm from "@/pages/User/Interfaces/IUserForm";
 
@@ -32,8 +31,6 @@ export const useAuthenticationStore = defineStore("useAuthenticationStore", {
   },
   actions: {
     async logout(): Promise<void> {
-      const calendarStore = useCalendarStore();
-      calendarStore.$reset();
       this.$reset();
     },
     async login(formulario: ILogin): Promise<IPromise> {

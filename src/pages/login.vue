@@ -33,14 +33,11 @@ const router = useRouter()
 const authenticationStore = useAuthenticationStore()
 companiesStore.fetchInfo(1)
 
-
 const login = async () => {
   const data = await authenticationStore.login(formulario)
+  console.log(data);
+
   if (data.code == 200) {
-    if (authenticationStore.user.pageInitial) {
-      router.push({ name: authenticationStore.user.pageInitial })
-      return false
-    }
     router.push({ name: 'index' })
   }
 }
