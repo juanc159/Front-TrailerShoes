@@ -1,1 +1,0 @@
-import{i as t,as as a,b9 as o,ba as e}from"./index-c9350ca5.js";const i=t({setup(){const s=a("router-view"),{injectSkinClasses:n}=o();return n(),()=>e("div",{class:"layout-wrapper layout-blank"},e(s))}});export{i as default};
