@@ -8,12 +8,6 @@ import routes from '~pages';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    {
-      name: 'pw',
-      path: '/pw/:title?/:id?',
-      meta: { layout: 'blank' },
-      component: PagePreview,
-    },
     ...setupLayouts(routes),
   ],
 })
@@ -26,16 +20,6 @@ router.beforeEach(async (to, from, next) => {
   const { isAuthenticate, permissions, user } = storeToRefs(authenticationStore)
 
   if (requiresAuth && !isAuthenticate.value) {
-    // si no estoy logeado y la pagina requiere authenticcion
-    // buscara si existe pagina dinamica
-    //si existe me envie a ella
-    // y si no me envia a login
-    const crudDynamicMenuPageStore = useCrudDynamicMenuPageStore()
-    const data = await crudDynamicMenuPageStore.principal()
-    if (data) {
-      next('/pw/' + data.title + '/' + window.btoa(data.id))
-    }
-
     next('/login') // redirige al usuario al login si la ruta requiere autenticación y el usuario no está autenticado
   }
   else {

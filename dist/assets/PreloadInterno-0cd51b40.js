@@ -1,1 +1,0 @@
-import{i as e,o,c as _,d as n,br as t,_ as a}from"./index-c9350ca5.js";const r={class:"preloadInterno"},s=e({__name:"PreloadInterno",setup(c){return(d,p)=>(o(),_("div",r,[n(t)]))}});const i=a(s,[["__scopeId","data-v-0903b3b4"]]);export{i as P};

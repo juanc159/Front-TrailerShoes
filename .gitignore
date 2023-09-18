@@ -9,11 +9,7 @@ lerna-debug.log*
 
 node_modules
 .DS_Store
-<<<<<<< HEAD
-
-=======
 # dist
->>>>>>> origin/cmsJuan
 dist-ssr
 *.local
 
