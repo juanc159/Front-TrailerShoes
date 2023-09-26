@@ -6,9 +6,9 @@ import { VDataTable } from 'vuetify/labs/VDataTable'
 import PreloadInterno from '@/components/Prelaod/PreloadInterno.vue'
 
 // --- --- --- Store --- --- ---
-import { useCrudThriftStore } from '@/pages/Thrift/Store/useCrudThriftStore'
-const storeThrift = useCrudThriftStore()
-const { action, thrifts, totalPage, lastPage, currentPage, totalData, loading, typeAction } = storeToRefs(storeThrift)
+import { useCrudEmployeeStore } from '@/pages/Employee/Store/useCrudEmployeeStore'
+const storeEmployee = useCrudEmployeeStore()
+const { action, employees, totalPage, lastPage, currentPage, totalData, loading, typeAction } = storeToRefs(storeEmployee)
 // --- --- END Store --- --- ---
 
 // permission data paginate
@@ -18,7 +18,7 @@ const sort_direction = ref<string>('')
 const sort_field = ref<string>('')
 
 const fetchDataList = async () => {
-  await storeThrift.fetchAll({
+  await storeEmployee.fetchAll({
     perPage: rowPerPage.value,
     page: currentPage.value,
     searchQuery: searchQuery.value,
@@ -53,17 +53,17 @@ watchArray([currentPage, searchQuery, rowPerPage], async () => {
 
 // 👉 Computing pagination data
 const paginationData = computed(() => {
-  const firstIndex = thrifts.value.length ? ((currentPage.value - 1) * totalPage.value) + 1 : 0
-  const lastIndex = thrifts.value.length + ((currentPage.value - 1) * totalPage.value)
+  const firstIndex = employees.value.length ? ((currentPage.value - 1) * totalPage.value) + 1 : 0
+  const lastIndex = employees.value.length + ((currentPage.value - 1) * totalPage.value)
 
   return `Mostrando ${firstIndex} a ${lastIndex} de ${totalData.value} registros`
 })
 
 const changeScreen = async (screen: string, registryId: number | null = null) => {
   action.value = (registryId == null) ? 'new' : 'edit'
-  storeThrift.clearFormulario()
-  storeThrift.typeAction = screen
-  if (registryId) storeThrift.fetchInfo(registryId)
+  storeEmployee.clearFormulario()
+  storeEmployee.typeAction = screen
+  if (registryId) storeEmployee.fetchInfo(registryId)
 }
 
 const deleteData = async (id: number) => {
@@ -75,7 +75,7 @@ const deleteData = async (id: number) => {
     denyButtonText: 'No',
   }).then(async result => {
     if (result.isConfirmed) {
-      await storeThrift.fetchDelete(id)
+      await storeEmployee.fetchDelete(id)
       await fetchDataList()
     }
   })
@@ -85,10 +85,10 @@ const deleteData = async (id: number) => {
 <template>
   <div>
 
-    <HeaderAlertView title="Listado" sub-title="Ahorros" icon="mdi-format-list-bulleted" />
+    <HeaderAlertView title="Listado" sub-title="Empelados" icon="mdi-format-list-bulleted" />
 
     <VContainer class="bg-vwhite" fluid>
-      <VDataTable :headers="headers" :items="thrifts" :items-per-page="rowPerPage" @update:sort-by="handleSortBy">
+      <VDataTable :headers="headers" :items="employees" :items-per-page="rowPerPage" @update:sort-by="handleSortBy">
         <template #top>
           <VContainer fluid class="d-flex flex-wrap py-4 gap-4">
             <div class="me-3" style="width: 80px;">

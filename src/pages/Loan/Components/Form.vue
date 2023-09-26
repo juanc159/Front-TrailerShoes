@@ -34,7 +34,7 @@ const submitForm = async () => {
 <template>
   <div>
 
-    <HeaderAlertView sub-title="Cargo" :action="action" :validate-crud="true" :btn-back="true"
+    <HeaderAlertView sub-title="Prestamo" :action="action" :validate-crud="true" :btn-back="true"
       @changeScreenBack="changeScreen" />
 
     <VContainer class="bg-vwhite" fluid>

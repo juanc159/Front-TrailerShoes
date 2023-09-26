@@ -2,9 +2,9 @@
 import { requiredValidator } from '@validators';
 import type { VForm } from 'vuetify/components';
 // --- --- --- Store --- --- ---
-import { useCrudThriftStore } from '@/pages/Thrift/Store/useCrudThriftStore';
-const storeThrift = useCrudThriftStore()
-const { action, formulario } = storeToRefs(storeThrift)
+import { useCrudEmployeeStore } from '@/pages/Employee/Store/useCrudEmployeeStore';
+const storeEmployee = useCrudEmployeeStore()
+const { action, formulario } = storeToRefs(storeEmployee)
 
 // --- --- END Store --- --- ---
 
@@ -13,17 +13,17 @@ const errors = ref<Array<string>>([])
 const formValidation = ref<VForm>()
 
 const changeScreen = async (typeAction: string) => {
-  storeThrift.typeAction = typeAction
+  storeEmployee.typeAction = typeAction
   await formValidation.value?.resetValidation()
   errors.value = []
   if (typeAction != 'back')
-    storeThrift.keyList++
+    storeEmployee.keyList++
 }
 
 const submitForm = async () => {
   const validation = await formValidation.value?.validate()
   if (validation?.valid) {
-    const data = await storeThrift.fetchSave()
+    const data = await storeEmployee.fetchSave()
     if (data.code === 200) changeScreen("list");
     if (data.code === 422) errors.value = data.errors ?? []; //muestra error del back
   }
@@ -34,7 +34,7 @@ const submitForm = async () => {
 <template>
   <div>
 
-    <HeaderAlertView sub-title="Ahorro" :action="action" :validate-crud="true" :btn-back="true"
+    <HeaderAlertView sub-title="Cargo" :action="action" :validate-crud="true" :btn-back="true"
       @changeScreenBack="changeScreen" />
 
     <VContainer class="bg-vwhite" fluid>
