@@ -30,7 +30,6 @@ const { width: windowWidth } = useWindowSize()
           @click="toggleVerticalOverlayNavActive(true)">
           <VIcon size="26" icon="tabler-menu-2"/>
         </IconBtn>
-        <h4 class="text-h4 d-none d-sm-block">{{company.name}}</h4>
         <!-- <h4 class="text-h4">{{company.name}}</h4> -->
         <NavbarThemeSwitcher />
 
