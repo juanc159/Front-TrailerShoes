@@ -4,7 +4,7 @@ import type { VForm } from 'vuetify/components';
 // --- --- --- Store --- --- ---
 import { useCrudChargeStore } from '@/pages/Charge/Store/useCrudChargeStore';
 const storeCharge = useCrudChargeStore()
-const { action, formulario } = storeToRefs(storeCharge)
+const { action, formulario, areas } = storeToRefs(storeCharge)
 
 // --- --- END Store --- --- ---
 
@@ -29,26 +29,33 @@ const submitForm = async () => {
   }
 }
 
+onMounted(async () => {
+  await storeCharge.fetchDataForm();
+});
+
 </script>
 
 <template>
   <div>
 
     <HeaderAlertView sub-title="Cargo" :action="action" :validate-crud="true" :btn-back="true"
-      @changeScreenBack="changeScreen"
-    />
+      @changeScreenBack="changeScreen" />
 
     <VContainer class="bg-vwhite" fluid>
       <VForm ref="formValidation" lazy-validation>
         <VRow>
-          <VCol cols="12">
-            <VTextField clearable v-model="formulario.name"
-              :rules="[requiredValidator]" :error-messages="errors.name"
+          <VCol cols="6">
+            <VTextField clearable v-model="formulario.name" :rules="[requiredValidator]" :error-messages="errors.name"
               @keypress="errors.name = ''">
               <template #label>
                 Nombre&nbsp;<b class="text-warning">*</b>
               </template>
             </VTextField>
+          </VCol>
+          <VCol cols="6">
+            <VSelect v-model="formulario.area_id" :items="areas" item-title="label" item-value="value" persistent-hint
+              label="Area *" :rules="[requiredValidator]" :error-messages="errors.area_id"
+              @keypress="errors.area_id = ''" />
           </VCol>
         </VRow>
         <VDivider class="border-opacity-75 my-4" color="csecundary" :thickness="3" />
@@ -57,7 +64,8 @@ const submitForm = async () => {
             <VTooltip text="Guardar" location="top">
               <template v-slot:activator="{ props }">
                 <VBtn class="ms-1" color="light" rounded="lg" v-bind="props" @click="submitForm()">
-                  Guardar&nbsp;<VIcon size="large" color="success" icon="mdi-content-save-outline" />
+                  Guardar&nbsp;
+                  <VIcon size="large" color="success" icon="mdi-content-save-outline" />
                 </VBtn>
               </template>
             </VTooltip>
