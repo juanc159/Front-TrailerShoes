@@ -29,6 +29,9 @@ const fetchDataList = async () => {
 
 const headers = [
   { title: 'Nombre', key: 'name' },
+  { title: 'Cargo', key: 'charge' },
+  { title: 'Celular', key: 'phone' },
+  { title: 'Numero de identificación', key: 'number_identification' },
   { title: 'Acciones', sortable: false, key: 'actions' },
 ]
 

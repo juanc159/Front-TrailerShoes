@@ -16,6 +16,7 @@ export const useCrudChargeStore = defineStore('useCrudChargeStore', {
     chargeData: {} as IChargeForm,
     keyList: 0 as number,
     charges: [] as Array<IChargeList>,
+    areas: [] as Array<object>,
     totalData: 0 as number,
     totalPage: 0 as number,
     currentPage: 1 as number,
@@ -34,6 +35,19 @@ export const useCrudChargeStore = defineStore('useCrudChargeStore', {
         name: '',
       }
     },
+    async fetchDataForm(): Promise<void> {
+      this.loading = true
+      await axiosIns.get(
+        '/charge-dataForm'
+      ).then(result => {
+        this.loading = false
+        this.areas = result.data.areas
+      }).catch(error => {
+        this.loading = false
+        console.log("error", error)
+      })
+    },
+
     async fetchAll(params: object): Promise<void> {
       this.loading = true
       await axiosIns.post(

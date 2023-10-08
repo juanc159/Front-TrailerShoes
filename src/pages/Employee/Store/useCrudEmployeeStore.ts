@@ -16,6 +16,7 @@ export const useCrudEmployeeStore = defineStore('useCrudEmployeeStore', {
     employeeData: {} as IForm,
     keyList: 0 as number,
     employees: [] as Array<IList>,
+    charges: [] as Array<object>,
     totalData: 0 as number,
     totalPage: 0 as number,
     currentPage: 1 as number,
@@ -34,6 +35,20 @@ export const useCrudEmployeeStore = defineStore('useCrudEmployeeStore', {
         name: '',
       }
     },
+
+    async fetchDataForm(): Promise<void> {
+      this.loading = true
+      await axiosIns.get(
+        '/employee-dataForm'
+      ).then(result => {
+        this.loading = false
+        this.charges = result.data.charges
+      }).catch(error => {
+        this.loading = false
+        console.log("error", error)
+      })
+    },
+
     async fetchAll(params: object): Promise<void> {
       this.loading = true
       await axiosIns.post(

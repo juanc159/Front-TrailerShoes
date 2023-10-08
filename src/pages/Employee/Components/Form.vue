@@ -4,7 +4,7 @@ import type { VForm } from 'vuetify/components';
 // --- --- --- Store --- --- ---
 import { useCrudEmployeeStore } from '@/pages/Employee/Store/useCrudEmployeeStore';
 const storeEmployee = useCrudEmployeeStore()
-const { action, formulario } = storeToRefs(storeEmployee)
+const { action, formulario, charges } = storeToRefs(storeEmployee)
 
 // --- --- END Store --- --- ---
 
@@ -29,6 +29,10 @@ const submitForm = async () => {
   }
 }
 
+onMounted(async () => {
+  await storeEmployee.fetchDataForm();
+});
+
 </script>
 
 <template>
@@ -40,11 +44,48 @@ const submitForm = async () => {
     <VContainer class="bg-vwhite" fluid>
       <VForm ref="formValidation" lazy-validation>
         <VRow>
-          <VCol cols="12">
+          <VCol cols="4">
             <VTextField clearable v-model="formulario.name" :rules="[requiredValidator]" :error-messages="errors.name"
               @keypress="errors.name = ''">
               <template #label>
                 Nombre&nbsp;<b class="text-warning">*</b>
+              </template>
+            </VTextField>
+          </VCol>
+          <VCol cols="4">
+            <VTextField clearable v-model="formulario.last_name" :rules="[requiredValidator]"
+              :error-messages="errors.last_name" @keypress="errors.last_name = ''">
+              <template #label>
+                Apellido&nbsp;<b class="text-warning">*</b>
+              </template>
+            </VTextField>
+          </VCol>
+          <VCol cols="4">
+            <VTextField clearable v-model="formulario.number_identification" :rules="[requiredValidator]"
+              :error-messages="errors.number_identification" @keypress="errors.number_identification = ''">
+              <template #label>
+                Documento&nbsp;<b class="text-warning">*</b>
+              </template>
+            </VTextField>
+          </VCol>
+          <VCol cols="4">
+            <VSelect v-model="formulario.charge_id" :items="charges" item-title="label" item-value="value" persistent-hint
+              label="Cargo *" :rules="[requiredValidator]" :error-messages="errors.charge_id"
+              @keypress="errors.charge_id = ''" />
+          </VCol>
+          <VCol cols="4">
+            <VTextField clearable v-model="formulario.phone" :rules="[requiredValidator]" :error-messages="errors.phone"
+              @keypress="errors.phone = ''">
+              <template #label>
+                Celular&nbsp;<b class="text-warning">*</b>
+              </template>
+            </VTextField>
+          </VCol>
+          <VCol cols="4">
+            <VTextField clearable v-model="formulario.indicator" :rules="[requiredValidator]"
+              :error-messages="errors.indicator" @keypress="errors.indicator = ''">
+              <template #label>
+                Indicador&nbsp;<b class="text-warning">*</b>
               </template>
             </VTextField>
           </VCol>
