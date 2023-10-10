@@ -7,7 +7,7 @@ import { VDataTable } from 'vuetify/labs/VDataTable'
 const storeMenu = useCrudMenuStore()
 
 // menu data paginate
-const { action, menus, totalPage, currentPage, totalData, loading } = storeToRefs(storeMenu)
+const { action, menus, totalPage, currentPage, totalData, loading, lastPage } = storeToRefs(storeMenu)
 const rowPerPage = ref<number>(10)
 const searchQuery = ref<string>('')
 const sort_direction = ref<string>('')
@@ -57,10 +57,10 @@ const paginationData = computed(() => {
 })
 
 const changeScreen = async (screen: string, registryId: number | null = null) => {
-  action.value = ( registryId == null ) ? 'new' : 'edit'
+  action.value = (registryId == null) ? 'new' : 'edit'
   storeMenu.clearFormulario()
   storeMenu.typeAction = screen
-  if( registryId ) storeMenu.fetchInfo(registryId)
+  if (registryId) storeMenu.fetchInfo(registryId)
 }
 
 const deleteData = async (id: number) => {
@@ -84,9 +84,7 @@ const deleteData = async (id: number) => {
 <template>
   <div>
 
-    <HeaderAlertView title="Listado" sub-title="Menú"
-      icon="mdi-format-list-bulleted"
-    />
+    <HeaderAlertView title="Listado" sub-title="Menú" icon="mdi-format-list-bulleted" />
 
     <VContainer class="bg-vwhite" fluid>
       <VDataTable :headers="headers" :items="menus" :items-per-page="rowPerPage" @update:sort-by="handleSortBy">
@@ -94,7 +92,7 @@ const deleteData = async (id: number) => {
           <VContainer fluid class="d-flex flex-wrap py-4 gap-4">
             <div class="me-3" style="width: 80px;">
               <VSelect v-model="rowPerPage" density="compact" variant="outlined" :items="[10, 20, 30, 50]" />
-            </div>  
+            </div>
             <VSpacer />
             <div class="app-user-search-filter d-flex  align-center flex-wrap gap-4">
               <div style="width: 10rem;">
@@ -103,7 +101,8 @@ const deleteData = async (id: number) => {
               <VTooltip text="Guardar" location="top">
                 <template v-slot:activator="{ props }">
                   <VBtn class="ms-1" color="light" rounded="lg" v-bind="props" @click="changeScreen('form')">
-                    Agregar&nbsp;<VIcon size="large" color="success" icon="mdi-plus"/>
+                    Agregar&nbsp;
+                    <VIcon size="large" color="success" icon="mdi-plus" />
                   </VBtn>
                 </template>
               </VTooltip>
@@ -117,14 +116,14 @@ const deleteData = async (id: number) => {
               Borrar
             </VTooltip>
           </VBtn>
-  
+
           <VBtn icon size="x-small" color="default" variant="text" @click="changeScreen('form', item.value)">
             <VIcon size="22" icon="tabler-edit" />
             <VTooltip activator="parent" location="top">
               Editar
             </VTooltip>
           </VBtn>
-        </template>  
+        </template>
         <template v-if="loading" #body>
           <tr>
             <td colspan="4">
@@ -133,14 +132,14 @@ const deleteData = async (id: number) => {
               </div>
             </td>
           </tr>
-        </template>  
+        </template>
         <template #bottom>
           <VCardText class="pt-2">
             <VRow>
               <VCol lg="4" cols="3">
                 {{ paginationData }}
               </VCol>
-  
+
               <VCol lg="8" cols="9" class="d-flex justify-end">
                 <VPagination v-model="currentPage" :total-visible="5" size="small" :length="lastPage" />
               </VCol>
